@@ -67,3 +67,29 @@ def recommend_colleges(stream, subject, max_colleges=5):
     suitable_colleges.sort(key=lambda x: x["distance_km"])
     
     return suitable_colleges[:max_colleges]
+
+def calculate_quiz_scores(responses):
+    """
+    Calculates the aggregate scores for each category based on quiz responses.
+    responses: dict mapping 'category_index' to the user's rating (1-5).
+    Example: {'scientific_interest_score_0': 5, 'scientific_interest_score_1': 4, ...}
+    Returns: dict with averaged scores, e.g., {'scientific_interest_score': 4.5, ...}
+    """
+    scores = {}
+    counts = {}
+    
+    for key, value in responses.items():
+        # key format is "category_name_index", e.g. "scientific_interest_score_0"
+        # We need to extract the category name
+        category = "_".join(key.split("_")[:-1])
+        
+        if category not in scores:
+            scores[category] = 0
+            counts[category] = 0
+            
+        scores[category] += value
+        counts[category] += 1
+        
+    # Calculate average
+    averaged_scores = {cat: scores[cat] / counts[cat] for cat in scores}
+    return averaged_scores

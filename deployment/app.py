@@ -1,8 +1,8 @@
 
 import streamlit as st
 import pandas as pd
-from logic import recommend_stream, recommend_subject_career, recommend_colleges
-from data import QUIZ_TO_SUBJECT_CAREER
+from logic import recommend_stream, recommend_subject_career, recommend_colleges, calculate_quiz_scores
+from data import QUIZ_TO_SUBJECT_CAREER, QUIZ_QUESTIONS
 
 st.set_page_config(page_title="Career Guidance System", page_icon="🎓")
 
@@ -11,27 +11,32 @@ st.write("Get personalized stream, subject, and college recommendations based on
 
 # --- Step 1: Stream Recommendation ---
 st.header("Step 1: Find Your Ideal Stream")
-st.write("Rate your interests (1-5) and enter your marks/grades (0-100).")
+st.write("Take a short quiz to assess your interests and enter your marks/grades.")
 
+with st.expander("📝 Take Interest Quiz", expanded=True):
+    quiz_responses = {}
+    for category, questions in QUIZ_QUESTIONS.items():
+        st.subheader(category.replace("_score", "").replace("_", " ").title())
+        for i, q in enumerate(questions):
+            key = f"{category}_{i}"
+            quiz_responses[key] = st.slider(q, 1, 5, 3, key=key)
+
+calculated_scores = calculate_quiz_scores(quiz_responses)
+
+st.subheader("📊 Academic Performance")
 col1, col2 = st.columns(2)
-
 with col1:
-    sci_score = st.slider("Scientific Interest (Physics, Bio, Tech)", 1, 5, 3)
     maths_marks = st.number_input("Mathematics Marks (%)", 0, 100, 75)
-    
-    biz_score = st.slider("Business Interest (Finance, Management)", 1, 5, 3)
     comm_marks = st.number_input("Commerce/Business Marks (%) (if applicable, else 0)", 0, 100, 0)
-
 with col2:
-    creative_score = st.slider("Creativity Interest (Art, Writing, History)", 1, 5, 3)
     social_marks = st.number_input("Social Science/Humanities Marks (%)", 0, 100, 65)
 
 user_data = {
-    "scientific_interest_score": sci_score,
+    "scientific_interest_score": calculated_scores.get("scientific_interest_score", 0),
     "maths_marks_percent": maths_marks,
-    "creativity_score": creative_score,
+    "creativity_score": calculated_scores.get("creativity_score", 0),
     "social_science_marks_percent": social_marks,
-    "business_interest_score": biz_score,
+    "business_interest_score": calculated_scores.get("business_interest_score", 0),
     "commerce_marks_percent": comm_marks
 }
 

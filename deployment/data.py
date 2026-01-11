@@ -100,3 +100,21 @@ QUIZ_TO_SUBJECT_CAREER = {
         "tools_interest": ("Skilled Trades", "Skilled Trades")
     }
 }
+
+QUIZ_QUESTIONS = {
+    "scientific_interest_score": [
+        "I enjoy learning about how the universe and natural world work.",
+        "I like creating things and understanding the technology behind them.",
+        "I am curious about analyzing data and performing experiments."
+    ],
+    "creativity_score": [
+        "I enjoy drawing, painting, writing, or other artistic activities.",
+        "I often think of unique and non-traditional solutions to problems.",
+        "I am interested in history, culture, and social issues."
+    ],
+    "business_interest_score": [
+        "I am interested in understanding how businesses and money work.",
+        "I enjoy convincing others or selling ideas/products.",
+        "I like planning, organizing, and managing events or projects."
+    ]
+}
