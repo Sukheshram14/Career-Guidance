@@ -31,14 +31,12 @@ with col1:
 with col2:
     social_marks = st.number_input("Social Science/Humanities Marks (%)", 0, 100, 65)
 
-user_data = {
-    "scientific_interest_score": calculated_scores.get("scientific_interest_score", 0),
+user_data = calculated_scores.copy()
+user_data.update({
     "maths_marks_percent": maths_marks,
-    "creativity_score": calculated_scores.get("creativity_score", 0),
     "social_science_marks_percent": social_marks,
-    "business_interest_score": calculated_scores.get("business_interest_score", 0),
     "commerce_marks_percent": comm_marks
-}
+})
 
 # Recommendation Button
 if st.button("Predict Stream"):

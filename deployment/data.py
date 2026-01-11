@@ -102,19 +102,44 @@ QUIZ_TO_SUBJECT_CAREER = {
 }
 
 QUIZ_QUESTIONS = {
-    "scientific_interest_score": [
-        "I enjoy learning about how the universe and natural world work.",
-        "I like creating things and understanding the technology behind them.",
-        "I am curious about analyzing data and performing experiments."
+    "analytical_reasoning_score": [
+        "I enjoy solving puzzles and riddles that require logical thinking.",
+        "I am good at identifying patterns and relationships in data.",
+        "I like to break down complex problems into smaller, manageable parts."
+    ],
+    "numerical_aptitude_score": [
+        "I am comfortable working with numbers and performing calculations.",
+        "I enjoy solving mathematical problems and equations.",
+        "I find it easy to analyze graphs, charts, and statistics."
+    ],
+    "communication_score": [
+        "I find it easy to express my thoughts and ideas clearly to others.",
+        "I enjoy public speaking or presenting information to a group.",
+        "I am a good listener and can understand others' perspectives well."
     ],
     "creativity_score": [
         "I enjoy drawing, painting, writing, or other artistic activities.",
         "I often think of unique and non-traditional solutions to problems.",
         "I am interested in history, culture, and social issues."
     ],
+    "scientific_interest_score": [
+        "I enjoy learning about how the universe and natural world work.",
+        "I like creating things and understanding the technology behind them.",
+        "I am curious about analyzing data and performing experiments."
+    ],
     "business_interest_score": [
         "I am interested in understanding how businesses and money work.",
         "I enjoy convincing others or selling ideas/products.",
         "I like planning, organizing, and managing events or projects."
+    ],
+    "practical_skills_score": [
+        "I prefer hands-on activities like fixing things or building models.",
+        "I enjoy working with tools, machinery, or electronics.",
+        "I learn better by doing and practicing rather than just reading."
+    ],
+    "leadership_score": [
+        "I enjoy taking charge and leading teams in group activities.",
+        "I am comfortable making decisions and taking responsibility for them.",
+        "I like motivating and guiding others to achieve a common goal."
     ]
 }
