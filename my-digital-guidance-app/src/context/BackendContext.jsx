@@ -7,67 +7,19 @@ const TIMEOUT_MS = 5000; // 5 seconds timeout
 const BackendContext = createContext();
 
 export const BackendProvider = ({ children }) => {
-  const [backendUrl, setBackendUrl] = useState(
-    localStorage.getItem("backendUrl") || null
-  );
-  const [loading, setLoading] = useState(!backendUrl);
-  const [error, setError] = useState(null);
-  const [prompting, setPrompting] = useState(false);
+  // Use the environment variable directly
+  // VITE_API_BASE_URL is loaded from .env at build/dev time
+  const backendUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+  
+  // We can keep these simple for compatibility, or remove if not used elsewhere
+  const loading = false;
+  const error = null;
+  const prompting = false;
 
-  useEffect(() => {
-    if (backendUrl) {
-      console.log("[BackendContext] Backend URL loaded from localStorage:", backendUrl);
-      setLoading(false);
-      return;
-    }
-
-    const fetchBackendUrl = async () => {
-      console.log("[BackendContext] Fetching backend URL from Pantry with timeout...");
-
-      // Create a timeout promise
-      const timeout = new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Pantry request timed out")), TIMEOUT_MS)
-      );
-
-      try {
-        const fetchPromise = fetch(
-          `https://getpantry.cloud/apiv1/pantry/${PANTRY_ID}/basket/${BASKET_NAME}`
-        );
-
-        const response = await Promise.race([fetchPromise, timeout]);
-
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-
-        const data = await response.json();
-        console.log("[BackendContext] Pantry data:", data);
-
-        const url = data.backend_url || data.backendUrl || data.backendURL;
-
-        if (!url) throw new Error("No backend URL found in Pantry data");
-
-        console.log("[BackendContext] Backend URL fetched from Pantry:", url);
-        setBackendUrl(url);
-        localStorage.setItem("backendUrl", url);
-      } catch (err) {
-        console.error("[BackendContext] Error fetching Pantry URL:", err);
-        setError(err);
-        setPrompting(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBackendUrl();
-  }, [backendUrl]);
-
+  // No-op function since we don't need manual entry anymore, 
+  // but kept to avoid breaking components that might call it
   const submitBackendUrl = (url) => {
-    if (url && url.trim() !== "") {
-      console.log("[BackendContext] Backend URL entered manually:", url);
-      setBackendUrl(url.trim());
-      localStorage.setItem("backendUrl", url.trim());
-      setPrompting(false);
-      setError(null);
-    }
+    console.log("Backend URL is managed via .env file now.");
   };
 
   return (
